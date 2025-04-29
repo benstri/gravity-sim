@@ -7,9 +7,15 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
-                "${file}",
+                "${workspaceFolder}\\src\\main.cpp", // Main source file
+                "${workspaceFolder}\\src\\glad.c",  // Add glad.c to the build
                 "-o",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+                "${fileDirname}\\${fileBasenameNoExtension}.exe",
+                "-I${workspaceFolder}\\include", // Include path for headers
+                "-L${workspaceFolder}\\lib",    // Library path
+                "-lglfw3dll",                   // Link GLFW
+                "-lopengl32",                   // Link OpenGL
+                "-lgdi32"                       // Link GDI (required on Windows)
             ],
             "options": {
                 "cwd": "${fileDirname}"
@@ -21,7 +27,7 @@
                 "kind": "build",
                 "isDefault": true
             },
-            "detail": "Task modified to use g++.exe for C++ compilation."
+            "detail": "Task modified to include glad.c for OpenGL linking."
         }
     ],
     "version": "2.0.0"
