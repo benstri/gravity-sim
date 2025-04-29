@@ -1,6 +1,7 @@
 #include <iostream>
+using namespace std;
 
 int main() {
-  std::cout << "Getting project ready, will start soon!\n";
+  cout << "Hello World! CPP is working on my desktop now!\n" << endl;
   return 0;
 }
