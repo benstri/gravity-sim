@@ -9,24 +9,28 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
 }
 
-void drawCircle() {
+// Position, position and velocity of the circle
+float centerX = 0.0f;
+float centerY = 0.0f;
+float velocityX = 0.005f;
+float velocityY = 0.005f;
+float radius = 0.15f;
+
+void drawCircle(float x, float y, float radius) {
     // Colour of circle
-    glColor3f(1.0, 0.0, 0.0);
+    glColor3f(1.0f, 0.0f, 0.0f); // R G B
 
     // Draw a circle using a triangle fan
-    float centerX = 0.0; // Circle center X
-    float centerY = 0.0; // Circle center Y
-    float radius = 0.2;  // Circle radius
     int numSegments = 100; // Number of segments to approximate the circle
 
     glBegin(GL_TRIANGLE_FAN);
-    glVertex2f(centerX, centerY); // Center of the circle
+    glVertex2f(x, y); // Center of the circle
 
     for (int i = 0; i <= numSegments; i++) {
-        float angle = 2.0 * M_PI * i / numSegments; // Current angle
-        float x = centerX + radius * cos(angle); // X coordinate
-        float y = centerY + radius * sin(angle); // Y coordinate
-        glVertex2f(x, y);
+        float angle = 2.0f * M_PI * i / numSegments; // Current angle
+        float posX = x + radius * cos(angle); // X coordinate
+        float posY = y + radius * sin(angle); // Y coordinate
+        glVertex2f(posX, posY);
     }
     
     glEnd();
@@ -39,7 +43,21 @@ void render() {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    drawCircle(); // Draw the circle
+    // Update the circle's position
+    centerX += velocityX;
+    centerY += velocityY;
+
+    // Check boundary in the X direction and the Y direction
+    if(centerX + radius > 1.0f || centerX - radius < -1.0f) {
+        velocityX = -(velocityX);
+    }
+
+    if(centerY + radius > 1.0f || centerY - radius < -1.0f) {
+        velocityY = -(velocityY);
+    }
+
+    // Draw the circle
+    drawCircle(centerX, centerY, radius);
 }
 
 int main() {
