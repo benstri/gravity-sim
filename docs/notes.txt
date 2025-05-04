@@ -1,0 +1,7 @@
+Steps for project:
+
+1: Apply acceleration to the circle
+
+2: Add colliding circles with acceleration
+
+3: 3D rendering(?)

@@ -36,6 +36,9 @@ void drawCircle(float x, float y, float radius) {
     glEnd();
 }
 
+const float gravity = 0.0005f;
+const float bounceFactor = 0.918f;
+
 // Function to render the scene and also draw objects
 void render() {
     
@@ -43,18 +46,18 @@ void render() {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    // Update the circle's position
-    centerX += velocityX;
+    // Figure out how to make the bal bounce off the ground.
+
+    velocityY -= gravity;
     centerY += velocityY;
 
-    // Check boundary in the X direction and the Y direction
-    if(centerX + radius > 1.0f || centerX - radius < -1.0f) {
-        velocityX = -(velocityX);
+    // Add boundary checks so the ball bounces
+
+    if(centerY - radius <= -1.0f) {
+        centerY = -1.0f + radius;
+        velocityY = -velocityY * bounceFactor;
     }
 
-    if(centerY + radius > 1.0f || centerY - radius < -1.0f) {
-        velocityY = -(velocityY);
-    }
 
     // Draw the circle
     drawCircle(centerX, centerY, radius);
